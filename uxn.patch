@@ -1,0 +1,15 @@
+diff --git a/src/uxnemu.c b/src/uxnemu.c
+index a91a5c4..aabecf4 100644
+--- a/src/uxnemu.c
++++ b/src/uxnemu.c
+@@ -40,8 +40,8 @@ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ WITH REGARD TO THIS SOFTWARE.
+ */
+ 
+-#define PAD 2
+-#define PAD2 4
++#define PAD 0
++#define PAD2 0
+ #define WIDTH 64 * 8
+ #define HEIGHT 40 * 8
+ #define TIMEOUT_MS 334

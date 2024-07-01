@@ -1,0 +1,49 @@
+diff --git a/src/video/cocoa/SDL_cocoawindow.m b/src/video/cocoa/SDL_cocoawindow.m
+index 828366095..5c4e00ac9 100644
+--- a/src/video/cocoa/SDL_cocoawindow.m
++++ b/src/video/cocoa/SDL_cocoawindow.m
+@@ -300,21 +300,8 @@ static int GetHintCtrlClickEmulateRightClick()
+ 
+ static NSUInteger GetWindowWindowedStyle(SDL_Window * window)
+ {
+-    /* IF YOU CHANGE ANY FLAGS IN HERE, PLEASE READ
+-       the NSWindowStyleMaskBorderless comments in SetupWindowData()! */
+ 
+-    /* always allow miniaturization, otherwise you can't programatically
+-       minimize the window, whether there's a title bar or not */
+-    NSUInteger style = NSWindowStyleMaskMiniaturizable;
+-
+-    if (window->flags & SDL_WINDOW_BORDERLESS) {
+-        style |= NSWindowStyleMaskBorderless;
+-    } else {
+-        style |= (NSWindowStyleMaskTitled|NSWindowStyleMaskClosable);
+-    }
+-    if (window->flags & SDL_WINDOW_RESIZABLE) {
+-        style |= NSWindowStyleMaskResizable;
+-    }
++    NSWindowStyleMask style = NSWindowStyleMaskFullSizeContentView | NSWindowStyleMaskBorderless | NSWindowStyleMaskTitled |  NSWindowStyleMaskResizable;      
+     return style;
+ }
+ 
+@@ -1704,6 +1691,12 @@ static int SetupWindowData(_THIS, SDL_Window * window, NSWindow *nswindow, NSVie
+         SDL_SetKeyboardFocus(data.window);
+     }
+ 
++    nswindow.titlebarAppearsTransparent = YES;
++    nswindow.aspectRatio = NSMakeSize( window->w, window->h );
++    [[nswindow standardWindowButton:NSWindowCloseButton] setHidden:YES];
++    [[nswindow standardWindowButton:NSWindowMiniaturizeButton] setHidden:YES];
++    [[nswindow standardWindowButton:NSWindowZoomButton] setHidden:YES];
++
+     /* SDL_WindowData will be holding a strong reference to the NSWindow, and
+      * it will also call [NSWindow close] in DestroyWindow before releasing the
+      * NSWindow, so the extra release provided by releasedWhenClosed isn't
+@@ -1880,7 +1873,7 @@ int Cocoa_CreateWindowFrom(_THIS, SDL_Window * window, const void *data)
+ void Cocoa_SetWindowTitle(_THIS, SDL_Window * window)
+ { @autoreleasepool
+ {
+-    const char *title = window->title ? window->title : "";
++    const char *title = "";
+     NSWindow *nswindow = ((__bridge SDL_WindowData *) window->driverdata).nswindow;
+     NSString *string = [[NSString alloc] initWithUTF8String:title];
+     [nswindow setTitle:string];

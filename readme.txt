@@ -12,7 +12,7 @@ apply patch on the sdl2 branch of the sdl repo (https://github.com/libsdl-org/SD
 and the uxn sdl2 emulator on sourcehut (https://git.sr.ht/~rabbits/uxn)
 
 uxnemu has an ugly exec script icon in the dock when launching, but using *magic* and 
-weird cocoa era logic, you can use the extended attributes of the macOS filesystems, HFS+ and APFS 
+weird carbon era logic, you can use the extended attributes of the macOS filesystems, HFS+ and APFS 
 to add a beautiful icon. unfortunately git cannot comprehend such dark arts (email linus)
 
 use https://github.com/mklement0/fileicon (brew install fileicon) and then 
